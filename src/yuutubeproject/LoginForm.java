@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package yuutubeproject;
 
-/**
- *
- * @author Daniel
- */
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 public class LoginForm extends javax.swing.JFrame {
 
     /**
@@ -37,7 +34,7 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        jButton_Login = new javax.swing.JButton();
         jLabelRegister = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -115,8 +112,13 @@ public class LoginForm extends javax.swing.JFrame {
 
         jPasswordField1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jButton1.setText("Login");
+        jButton_Login.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jButton_Login.setText("Login");
+        jButton_Login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_LoginActionPerformed(evt);
+            }
+        });
 
         jLabelRegister.setForeground(new java.awt.Color(77, 19, 209));
         jLabelRegister.setText("Don't have an account? Click here to create a new account");
@@ -133,7 +135,7 @@ public class LoginForm extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(152, 152, 152))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
@@ -161,7 +163,7 @@ public class LoginForm extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelRegister)
                 .addContainerGap(46, Short.MAX_VALUE))
@@ -206,6 +208,33 @@ public class LoginForm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabelRegisterMouseClicked
 
+    private void jButton_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LoginActionPerformed
+        PreparedStatement ps;
+        ResultSet rs;
+        String email = jTextField1.getText();
+        String pass = String.valueOf(jPasswordField1.getPassword());
+        
+        String query = "SELECT * FROM userdata WHERE useremail =? AND password =?";
+        
+        try {
+            ps = ConnectionDB.dbConnection().prepareStatement(query);
+            
+            ps.setString(1, email);
+            ps.setString(2, pass);
+            
+            rs = ps.executeQuery();
+            
+            if(rs.next()) {
+                JOptionPane.showMessageDialog(null, "You're logged in. Welcome back!");
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "The email or password is wrong. Please try again.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton_LoginActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -242,7 +271,7 @@ public class LoginForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton_Login;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
