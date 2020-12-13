@@ -5,6 +5,8 @@
  */
 package yuutubeproject;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Daniel
@@ -15,7 +17,16 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Scanner scn = new Scanner(System.in);
+        System.out.println("Press 1 for login");
+        int s = scn.nextInt();
+        
+        if (s == 1) {
+            LoginForm lgf = new LoginForm();
+            lgf.setVisible(true);
+            lgf.pack();
+            lgf.setLocationRelativeTo(null);
+        }
     }
     
 }
