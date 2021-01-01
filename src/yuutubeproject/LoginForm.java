@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class LoginForm extends javax.swing.JFrame {
+    public int LoggedIn;
 
     /**
      * Creates new form LoginForm
@@ -14,6 +15,8 @@ public class LoginForm extends javax.swing.JFrame {
     public LoginForm() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        LoggedIn = 0;
     }
 
     /**
@@ -225,6 +228,7 @@ public class LoginForm extends javax.swing.JFrame {
             rs = ps.executeQuery();
             
             if(rs.next()) {
+                LoggedIn = 1;
                 JOptionPane.showMessageDialog(null, "You're logged in. Welcome back!");
             }
             else {

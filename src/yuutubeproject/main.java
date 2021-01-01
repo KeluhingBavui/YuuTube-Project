@@ -18,11 +18,11 @@ public class main {
      */
     public static void main(String[] args) {
         Scanner scn = new Scanner(System.in);
+        LoginForm lgf = new LoginForm();
         System.out.println("Press 1 for login");
         int s = scn.nextInt();
         
         if (s == 1) {
-            LoginForm lgf = new LoginForm();
             lgf.setVisible(true);
             lgf.pack();
             lgf.setLocationRelativeTo(null);
